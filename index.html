@@ -234,22 +234,21 @@
             transition-delay: 0s;
         }
         
-        /* MODIFIED: Adjusted title position to prevent overlap */
         .title-overlay {
-            position: absolute; /* Changed from fixed to absolute */
+            position: absolute; 
             top: 50%; left: 50%;
-            transform: translate(-50%, 0); /* Start centered and slightly up */
+            transform: translate(-50%, 0); 
             z-index: 15;
             text-align: center;
-            opacity: 0; /* Start invisible */
+            opacity: 0;
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             pointer-events: none;
         }
 
-        /* MODIFIED: Final position of the title, below the letter */
+        /* MODIFIED: Final position of the title is now ABOVE the letter */
         body.scene-shifted .title-overlay {
             opacity: 1;
-            transform: translate(-50%, 220px); /* Move down below the letter */
+            transform: translate(-50%, -220px); /* Use a negative value to move it up */
         }
 
         .title-overlay h1 {
@@ -278,9 +277,10 @@
             .title-overlay h1 { font-size: 2rem; }
             .title-overlay p { font-size: 1rem; }
             .envelope-text { font-size: 22px; }
-            /* Adjust title position on mobile */
+            
+            /* MODIFIED: Adjust title position on mobile */
             body.scene-shifted .title-overlay {
-                 transform: translate(-50%, 190px);
+                 transform: translate(-50%, -190px); /* Use a negative value to move it up */
             }
         }
     </style>
@@ -354,7 +354,7 @@
                     
                     setTimeout(() => {
                         letter.classList.add('centered');
-                        // MODIFIED: Delay the title from appearing until after the letter is centered
+                        // Delay the title from appearing until after the letter is centered
                         setTimeout(() => {
                             body.classList.add('scene-shifted');
                         }, 400); // 400ms delay
