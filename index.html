@@ -40,14 +40,14 @@
         z-index: 1;
     }
 
-    /* --- NEW: Animation for slow, distant particles --- */
+    /* --- Animation for slow, distant particles --- */
     @keyframes slow-fade {
         0%, 100% { opacity: 0; transform: translateY(0); }
         50% { opacity: 0.6; }
         99% { transform: translateY(-40px); }
     }
 
-    /* --- NEW: Slow, distant particles --- */
+    /* --- Slow, distant particles --- */
     .particle-slow {
         position: absolute;
         width: 15px;
@@ -59,7 +59,7 @@
         z-index: 1; /* Behind the envelope */
     }
 
-    /* --- UPDATED: Main gold sparkles --- */
+    /* --- Main gold sparkles --- */
     .sparkle {
         position: absolute;
         width: 4px; height: 4px;
@@ -76,7 +76,7 @@
         50% { opacity: 1; transform: scale(1) rotate(180deg); }
     }
 
-    /* --- UPDATED: Increased particle count with varied sizes and colors --- */
+    /* --- Particle Positions & Variations --- */
     .sparkle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
     .sparkle:nth-child(2) { top: 60%; left: 90%; animation-delay: 1.2s; width: 5px; height: 5px; background: linear-gradient(45deg, #f1c40f, #fef9e7); }
     .sparkle:nth-child(3) { top: 80%; left: 20%; animation-delay: 2.3s; }
@@ -93,7 +93,6 @@
     .sparkle:nth-child(14) { top: 35%; left: 95%; animation-delay: 1.1s; }
     .sparkle:nth-child(15) { top: 85%; left: 50%; animation-delay: 2.1s; }
 
-    /* --- NEW: Positions for slow particles --- */
     .particle-slow:nth-of-type(1) { top: 10%; left: 15%; animation-delay: 0s; }
     .particle-slow:nth-of-type(2) { top: 70%; left: 80%; animation-delay: 3s; }
     .particle-slow:nth-of-type(3) { top: 40%; left: 50%; animation-delay: 6s; }
@@ -125,8 +124,8 @@
         filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.5));
     }
     
-    body.opening .envelope-wrapper { transform: translateY(400px); }
-    body.opening .bottom-background { transform: translateY(400px); }
+    body.opening .envelope-wrapper { transform: translateY(120vh); }
+    body.opening .bottom-background { transform: translateY(120vh); }
 
     .letter {
         position: absolute;
@@ -139,6 +138,7 @@
         z-index: 1;
         transform: translate(-50%, -20%);
         transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        cursor: pointer; /* Add cursor pointer to indicate it's clickable */
     }
 
     body.opening .letter {
@@ -154,8 +154,6 @@
         transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
-    .letter img { width: 100%; height: auto; display: block; border-radius: 7px; }
-    
     .envelope-back {
         background-color: #f8f5f0;
         background-image: linear-gradient(90deg, rgba(200,190,180,0.03) 50%, transparent 50%),
@@ -208,7 +206,6 @@
         box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
     }
     
-    /* --- IMPROVED BOOT ANIMATION --- */
     @keyframes stampAndBounce {
         0% {
             transform: translateX(-50%) scale(2);
@@ -240,8 +237,6 @@
             inset 0 -3px 5px rgba(0, 0, 0, 0.3),
             0 2px 4px rgba(0, 0, 0, 0.4);
         transition: opacity 0.3s ease-in-out, transform 0.3s ease;
-        
-        /* Apply new animation */
         opacity: 0;
         transform: translateX(-50%) scale(0);
         animation: stampAndBounce 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
@@ -312,25 +307,6 @@
         transform: translate(-50%, -350%); 
     }
 
-    .title-overlay h1 {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.5rem;
-        font-weight: 500;
-        color: #ffd700;
-        margin: 0;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-        letter-spacing: 1px;
-    }
-
-    .title-overlay p {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 1.2rem;
-        color: rgba(255, 255, 255, 0.85);
-        margin: 15px 0 0 0;
-        font-weight: 300;
-        letter-spacing: 0.5px;
-    }
-
     @media (max-width: 768px) {
         .envelope-wrapper { width: 280px; height: 170px; }
         .letter { width: 250px; }
@@ -348,6 +324,53 @@
             transform: translate(-50%, 0);
         }
     }
+
+    /* --- Shine Effect on Image --- */
+    .image-container {
+        position: relative; /* Establishes a positioning context for the shine */
+        overflow: hidden;   /* Hides the part of the shine that is outside the container */
+        border-radius: 7px 7px 0 0; /* Match the image's original top border radius */
+        line-height: 0;     /* Removes any extra space below the image */
+    }
+
+    .image-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 70%; /* Width of the shine */
+        height: 100%;
+        /* The shine itself: a skewed, semi-transparent gradient */
+        background: linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            transparent 100%
+        );
+        transform: skewX(-25deg); /* Angle the shine */
+        /* Animation definition */
+        animation: shine 5s infinite;
+        animation-delay: 2.5s; /* Start after the letter is revealed */
+    }
+
+    /* Keyframes for the shine animation */
+    @keyframes shine {
+        0% {
+            left: -100%; /* Start completely off-screen to the left */
+        }
+        100% {
+            left: 130%; /* End completely off-screen to the right */
+        }
+    }
+
+    /* --- MODIFICATION to Original CSS --- */
+    .letter img { 
+        width: 100%; 
+        height: auto; 
+        display: block; 
+        /* border-radius has been moved to .image-container */
+        -webkit-box-reflect: below 0px repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15) 1px, transparent 1px, transparent 4px);
+    }
+
 </style>
 </head>
 <body>
@@ -363,13 +386,10 @@
     <div class="sparkle"></div> <div class="sparkle"></div> <div class="sparkle"></div>
     <div class="sparkle"></div> <div class="sparkle"></div> <div class="sparkle"></div>
 
-    <div class="title-overlay">
-        <h1>Save the Date</h1>
-        <p>21st February 2026 Pune</p>
-    </div>
-
     <div class="letter">
-        <img src="images/image.jpg" alt="Hennashka & Aayush">
+        <div class="image-container">
+            <img src="images/image.jpg" alt="Hennashka & Aayush">
+        </div>
     </div>
 
     <div class="envelope-wrapper">
@@ -391,57 +411,67 @@
             const body = document.body;
             const openingSound = document.getElementById('opening-sound');
 
-            const handleEnvelopeClick = () => {
-                if (envelopeWrapper.classList.contains('animating')) {
-                    return;
-                }
+            const handleClose = () => {
+                if (envelopeWrapper.classList.contains('animating')) return;
+
                 envelopeWrapper.classList.add('animating');
+                letter.classList.remove('centered');
+                body.classList.remove('scene-shifted');
 
-                if (letter.classList.contains('centered')) {
-                    // ---- CLOSING SEQUENCE ----
-                    letter.classList.remove('centered');
-                    body.classList.remove('scene-shifted');
+                setTimeout(() => {
+                    body.classList.remove('opening');
+                }, 400);
 
-                    setTimeout(() => {
-                        body.classList.remove('opening');
-                    }, 400);
+                setTimeout(() => {
+                    envelopeWrapper.classList.remove('open');
+                }, 1200);
 
-                    setTimeout(() => {
-                        envelopeWrapper.classList.remove('open');
-                    }, 1200);
-
-                    setTimeout(() => {
-                        envelopeWrapper.classList.remove('animating');
-                    }, 2000);
-
-                } else {
-                    // ---- OPENING SEQUENCE ----
-                    if(openingSound) {
-                        openingSound.currentTime = 0;
-                        openingSound.play();
-                    }
-
-                    envelopeWrapper.classList.add('open');
-
-                    setTimeout(() => {
-                        body.classList.add('opening');
-                    }, 400);
-
-                    setTimeout(() => {
-                        letter.classList.add('centered');
-                        // Delay the title from appearing until after the letter is centered
-                        setTimeout(() => {
-                            body.classList.add('scene-shifted');
-                        }, 400); // 400ms delay
-                    }, 1200);
-
-                    setTimeout(() => {
-                        envelopeWrapper.classList.remove('animating');
-                    }, 2500);
-                }
+                setTimeout(() => {
+                    envelopeWrapper.classList.remove('animating');
+                }, 2000);
             };
 
-            envelopeWrapper.addEventListener('click', handleEnvelopeClick);
+            const handleOpen = () => {
+                if (envelopeWrapper.classList.contains('animating')) return;
+                
+                envelopeWrapper.classList.add('animating');
+                
+                if (openingSound) {
+                    openingSound.currentTime = 0;
+                    openingSound.play();
+                }
+
+                envelopeWrapper.classList.add('open');
+
+                setTimeout(() => {
+                    body.classList.add('opening');
+                }, 400);
+
+                setTimeout(() => {
+                    letter.classList.add('centered');
+                    setTimeout(() => {
+                        body.classList.add('scene-shifted');
+                    }, 400);
+                }, 1200);
+
+                setTimeout(() => {
+                    envelopeWrapper.classList.remove('animating');
+                }, 2500);
+            };
+
+            envelopeWrapper.addEventListener('click', () => {
+                if (letter.classList.contains('centered')) {
+                    handleClose();
+                } else {
+                    handleOpen();
+                }
+            });
+
+            letter.addEventListener('click', () => {
+                if (letter.classList.contains('centered')) {
+                    handleClose();
+                }
+            });
         };
     </script>
 </body>
