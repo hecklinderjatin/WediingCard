@@ -47,7 +47,7 @@
             background: linear-gradient(45deg, #ffd700, #ffffff);
             border-radius: 50%;
             opacity: 0;
-            animation: sparkle 3s infinite;
+            animation: sparkle 3.5s infinite;
             box-shadow: 0 0 8px #ffd700;
         }
 
@@ -56,11 +56,18 @@
             50% { opacity: 1; transform: scale(1) rotate(180deg); }
         }
 
+        /* --- INCREASED PARTICLE COUNT --- */
         .sparkle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
-        .sparkle:nth-child(2) { top: 60%; left: 90%; animation-delay: 1s; }
-        .sparkle:nth-child(3) { top: 80%; left: 20%; animation-delay: 2s; }
+        .sparkle:nth-child(2) { top: 60%; left: 90%; animation-delay: 1.2s; }
+        .sparkle:nth-child(3) { top: 80%; left: 20%; animation-delay: 2.3s; }
         .sparkle:nth-child(4) { top: 30%; left: 80%; animation-delay: 0.5s; }
-        .sparkle:nth-child(5) { top: 70%; left: 60%; animation-delay: 1.5s; }
+        .sparkle:nth-child(5) { top: 70%; left: 60%; animation-delay: 1.8s; }
+        .sparkle:nth-child(6) { top: 10%; left: 50%; animation-delay: 2.8s; }
+        .sparkle:nth-child(7) { top: 90%; left: 40%; animation-delay: 0.2s; }
+        .sparkle:nth-child(8) { top: 45%; left: 25%; animation-delay: 1.5s; }
+        .sparkle:nth-child(9) { top: 75%; left: 75%; animation-delay: 3s; }
+        .sparkle:nth-child(10) { top: 5%; left: 85%; animation-delay: 0.8s; }
+
 
         .bottom-background {
             position: absolute;
@@ -169,6 +176,25 @@
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
+        /* --- IMPROVED BOOT ANIMATION --- */
+        @keyframes stampAndBounce {
+            0% {
+                transform: translateX(-50%) scale(2);
+                opacity: 0;
+            }
+            50% {
+                transform: translateX(-50%) scale(0.9) rotate(5deg);
+                opacity: 1;
+            }
+            70% {
+                 transform: translateX(-50%) scale(1.05) rotate(12deg);
+            }
+            100% {
+                transform: translateX(-50%) scale(1) rotate(10deg);
+                opacity: 1;
+            }
+        }
+
         .wax-seal {
             position: absolute;
             width: 48px;
@@ -182,7 +208,11 @@
                 inset 0 -3px 5px rgba(0, 0, 0, 0.3),
                 0 2px 4px rgba(0, 0, 0, 0.4);
             transition: opacity 0.3s ease-in-out, transform 0.3s ease;
-            transform: translateX(-50%) rotate(10deg);
+            
+            /* Apply new animation */
+            opacity: 0;
+            transform: translateX(-50%) scale(0);
+            animation: stampAndBounce 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
         }
         
         .envelope-wrapper:hover .wax-seal {
@@ -245,10 +275,9 @@
             pointer-events: none;
         }
 
-        /* MODIFIED: Final position of the title is now ABOVE the letter */
         body.scene-shifted .title-overlay {
             opacity: 1;
-            transform: translate(-50%, -350px); /* Use a negative value to move it up */
+            transform: translate(-50%, -350%); 
         }
 
         .title-overlay h1 {
@@ -280,14 +309,15 @@
             
             /* MODIFIED: Adjust title position on mobile */
             body.scene-shifted .title-overlay {
-                 transform: translate(-50%, -190px); /* Use a negative value to move it up */
+                transform: translate(-50%, -190px); /* Use a negative value to move it up */
             }
         }
     </style>
 </head>
 <body>
     <div class="sparkle"></div> <div class="sparkle"></div> <div class="sparkle"></div> <div class="sparkle"></div> <div class="sparkle"></div>
-    
+    <div class="sparkle"></div> <div class="sparkle"></div> <div class="sparkle"></div> <div class="sparkle"></div> <div class="sparkle"></div>
+
     <div class="title-overlay">
         <h1>Save the Date</h1>
         <p>21st February 2026 Pune</p>
@@ -299,7 +329,7 @@
     
     <div class="envelope-wrapper">
         <div class="envelope-back"></div>
-        <div class="envelope-text">do u got any plan?</div>
+        <div class="envelope-text">Do you got plans?</div>
         <div class="flap-wrapper">
             <div class="flap"></div>
         </div>
